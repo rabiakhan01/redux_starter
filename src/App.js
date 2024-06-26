@@ -1,6 +1,6 @@
 import React from "react";
-import Cart from '../src/components/Cart'
 import images from "./assets/images/images";
+import CartContainer from "./containers/CartContainer";
 function App() {
   return (
     <div className="flex flex-col gap-5">
@@ -8,7 +8,7 @@ function App() {
         <h1>Home Component</h1>
         <img src={images.cart} alt="cart" className="h-8 w-8" />
       </div>
-      <Cart />
+      <CartContainer />
     </div>
   );
 }
