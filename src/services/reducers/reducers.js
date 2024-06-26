@@ -9,11 +9,11 @@ export default function cartItems(state = [], action) {
                 action.data,
             ]
             break;
+
         case REMOVE_TO_CART:
-            state.pop();
-            return [
-                ...state,
-            ]
+            return state.filter((product) => product.id !== action.id)
+            break;
+
         case UPDATE_TO_CART:
             const updatedCartItems = state.map((item) => {
                 if (item.id === action.data.id) {
@@ -24,6 +24,8 @@ export default function cartItems(state = [], action) {
                 }
             })
             return updatedCartItems.filter((item) => item.quantity > 0)
+            break;
+
         default:
             return state;
     }

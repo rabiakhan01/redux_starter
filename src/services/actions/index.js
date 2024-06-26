@@ -5,9 +5,10 @@ export const addToCart = (data) => {
         data,
     }
 }
-export const removeToCart = () => {
+export const removeToCart = (id) => {
     return {
         type: REMOVE_TO_CART,
+        id,
     }
 }
 
