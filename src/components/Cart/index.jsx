@@ -1,11 +1,58 @@
-import React from "react";
-import images from "../../assets/images/images";
-import { useDispatch } from "react-redux";
-import { addToCart, removeToCart } from "../../services/actions";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, removeToCart, updateCart } from "../../services/actions";
 import { allProducts } from "../../utils/dummyData";
 
 const Cart = () => {
     const dispatch = useDispatch();
+
+    //get data from the store
+    const result = useSelector((state) => state.cartItems);
+
+    //set quantity of every signle item which is added
+    const [quantity, setQuantity] = useState(1);
+
+    //call action when the user click on the cart button
+    const handelAddToCart = (item) => {
+        dispatch(addToCart({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: quantity,
+        }))
+    }
+
+    const increaseQuantity = (id) => {
+        const data = result.map((item) => {
+            if (item.id === id) {
+                return { ...item, quantity: item.quantity + 1 }
+            }
+            else {
+                return item
+            }
+        })
+        const updatedProduct = data.find((product) => product.id == id);
+        if (updatedProduct) {
+            dispatch(updateCart(updatedProduct));
+        }
+    }
+
+    const decreaseQuantity = (id) => {
+        const data = result.map((item) => {
+            if (item.id === id) {
+                return { ...item, quantity: item.quantity - 1 }
+            }
+            else {
+                return item
+            }
+        })
+        const updatedProduct = data.find((product) => product.id == id);
+        if (updatedProduct) {
+            dispatch(updateCart(updatedProduct));
+        }
+    }
+
+
     return (
         <div className="flex flex-col gap-3">
             {
@@ -18,12 +65,24 @@ const Cart = () => {
                                 <p>Price: ${item.price}</p>
                             </div>
                             <div className="flex flex-col gap-3">
-                                <button className="bg-pink-500 px-2 py-2 rounded-md text-white" onClick={() => dispatch(addToCart({
-                                    id: 1,
-                                    name: 'Colliflower',
-                                    price: '10'
-                                }))}>Add To Cart</button>
-                                <button className="bg-sky-500 px-2 py-2 rounded-md text-white" onClick={() => dispatch(removeToCart())}>Remove To Cart</button>
+
+                                {
+                                    result?.find((product) => product.id === item.id && product.quantity > 0) ?
+                                        <div className="flex justify-between items-center bg-pink-500 px-2 py-2 rounded-md text-white">
+                                            <button className="w-4 h-full text-xl" onClick={() => increaseQuantity(item.id)}>+</button>
+                                            <p>{result?.find((product) => product.id === item.id).quantity}</p>
+                                            <button className="w-4 h-full text-2xl" onClick={() => decreaseQuantity(item.id)}>-</button>
+                                        </div>
+                                        :
+                                        <button className="bg-pink-500 px-2 py-2 rounded-md text-white" onClick={() => handelAddToCart(item)}>Add To Cart</button>
+                                }
+                                {
+                                    result.find((product) => product.id === item.id)
+                                        ?
+                                        <button className="bg-sky-500 px-2 py-2 rounded-md text-white" onClick={() => dispatch(removeToCart(item.id))}>Remove From Cart</button>
+                                        :
+                                        ''
+                                }
                             </div>
                         </div>
                     )
