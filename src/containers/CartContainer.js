@@ -1,8 +1,9 @@
 import { connect } from "react-redux";
 import Cart from '../components/Cart';
-import { addToCart } from '../services/actions'
-const mapStateToProps = state => ({
+import { addToCart } from '../services/actions';
 
+const mapStateToProps = state => ({
+    cartData: state
 })
 const mapDispatchToProps = dispatch => ({
     addToCartHandler: data => dispatch(addToCart(data))
