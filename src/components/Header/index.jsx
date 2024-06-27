@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 const Header = () => {
 
     const result = useSelector((state) => state.cartItems);
-    console.log("🚀 ~ Header ~ result:", result)
+    //console.log("🚀 ~ Header ~ result:", result)
     const [totalQuantity, setTotalQuantity] = useState(0);
 
     useEffect(() => {
@@ -14,7 +14,8 @@ const Header = () => {
     }, [result])
 
     return (
-        <nav className="flex justify-end px-5 py-5">
+        <nav className="sticky top-0 flex justify-between px-5 py-5 bg-white">
+            <h1 className="text-pink-500 font-semibold text-xl">CartApp</h1>
             <div className="relative h-8 w-8">
                 <img src={images.cart} alt="cart" className="object-cover" />
                 <p className="flex absolute right-0 -top-2 bg-pink-500 w-5 h-5 rounded-full justify-center items-center text-sm text-white">{totalQuantity ? totalQuantity : '+'}</p>

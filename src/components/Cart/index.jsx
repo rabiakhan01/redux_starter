@@ -9,16 +9,13 @@ const Cart = () => {
     //get data from the store
     const result = useSelector((state) => state.cartItems);
 
-    //set quantity of every signle item which is added
-    const [quantity, setQuantity] = useState(1);
-
     //call action when the user click on the cart button
     const handelAddToCart = (item) => {
         dispatch(addToCart({
             id: item.id,
             name: item.name,
             price: item.price,
-            quantity: quantity,
+            quantity: 1,
         }))
     }
 
@@ -54,13 +51,13 @@ const Cart = () => {
 
 
     return (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2 sm:gap-3">
             {
                 allProducts.map((item) => {
                     return (
-                        <div className="flex justify-between items-center w-[40%] border border-gray-400 h-32 ml-4 px-4" key={item.id}>
-                            <img src={item.image} alt="" className="object-cover h-16 w-16 rounded-md" />
-                            <div>
+                        <div className="flex justify-between items-center sm:w-[30rem] lg:w-[40rem] border border-gray-400 h-32 ml-4 px-4" key={item.id}>
+                            <img src={item.image} alt="" className="object-cover h-12 w-12 sm:h-16 sm:w-16 rounded-md" />
+                            <div className="text-sm sm:text-base">
                                 <p>Name: {item.name}</p>
                                 <p>Price: ${item.price}</p>
                             </div>
@@ -68,18 +65,18 @@ const Cart = () => {
 
                                 {
                                     result?.find((product) => product.id === item.id && product.quantity > 0) ?
-                                        <div className="flex justify-between items-center bg-pink-500 px-2 py-2 rounded-md text-white">
-                                            <button className="w-4 h-full text-xl" onClick={() => increaseQuantity(item.id)}>+</button>
-                                            <p>{result?.find((product) => product.id === item.id).quantity}</p>
+                                        <div className="flex justify-between items-center bg-pink-500 px-2 sm:py-2 rounded-md text-white">
+                                            <button className="w-4 h-full text-xs sm:text-xl" onClick={() => increaseQuantity(item.id)}>+</button>
+                                            <p className="text-xs sm:text-base">{result?.find((product) => product.id === item.id).quantity}</p>
                                             <button className="w-4 h-full text-2xl" onClick={() => decreaseQuantity(item.id)}>-</button>
                                         </div>
                                         :
-                                        <button className="bg-pink-500 px-2 py-2 rounded-md text-white" onClick={() => handelAddToCart(item)}>Add To Cart</button>
+                                        <button className="bg-pink-500 px-2 py-2 rounded-md text-xs sm:text-base text-white " onClick={() => handelAddToCart(item)}>Add To Cart</button>
                                 }
                                 {
                                     result.find((product) => product.id === item.id)
                                         ?
-                                        <button className="bg-sky-500 px-2 py-2 rounded-md text-white" onClick={() => dispatch(removeToCart(item.id))}>Remove From Cart</button>
+                                        <button className="bg-sky-500 px-2 py-2 rounded-md text-white text-xs sm:text-base" onClick={() => dispatch(removeToCart(item.id))}>Remove From Cart</button>
                                         :
                                         ''
                                 }
