@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeToCart, updateCart } from "../../services/actions";
+import { addToCart, removeToCart, updateCart } from "../../redux/Cart/actions";
 import { allProducts } from "../../utils/dummyData";
 
 const Cart = () => {
@@ -28,7 +28,7 @@ const Cart = () => {
                 return item
             }
         })
-        const updatedProduct = data.find((product) => product.id == id);
+        const updatedProduct = data.find((product) => product.id === id);
         if (updatedProduct) {
             dispatch(updateCart(updatedProduct));
         }
@@ -43,7 +43,7 @@ const Cart = () => {
                 return item
             }
         })
-        const updatedProduct = data.find((product) => product.id == id);
+        const updatedProduct = data.find((product) => product.id === id);
         if (updatedProduct) {
             dispatch(updateCart(updatedProduct));
         }

@@ -1,4 +1,4 @@
-import { ADD_TO_CART, REMOVE_TO_CART, UPDATE_TO_CART } from "../constants";
+import { ADD_TO_CART, REMOVE_TO_CART, UPDATE_TO_CART } from "./types";
 
 export default function cartItems(state = [], action) {
     // console.log("action", action)
@@ -8,11 +8,9 @@ export default function cartItems(state = [], action) {
                 ...state,
                 action.data,
             ]
-            break;
 
         case REMOVE_TO_CART:
             return state.filter((product) => product.id !== action.id)
-            break;
 
         case UPDATE_TO_CART:
             const updatedCartItems = state.map((item) => {
@@ -24,7 +22,6 @@ export default function cartItems(state = [], action) {
                 }
             })
             return updatedCartItems.filter((item) => item.quantity > 0)
-            break;
 
         default:
             return state;
