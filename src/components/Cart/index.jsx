@@ -8,10 +8,10 @@ const Cart = () => {
 
     //get data from the store
     const result = useSelector((state) => state.cartItems);
-    // console.log("🚀 ~ Cart ~ result:", result)
+    console.log("🚀 ~ Cart ~ result:", result)
 
     const res = useSelector((state) => state)
-    // console.log("🚀 ~ Cart ~ res:", res)
+    console.log("🚀 ~ state ~ result:", res)
     //call action when the user click on the cart button
     const handelAddToCart = (item) => {
         dispatch(addToCart({
