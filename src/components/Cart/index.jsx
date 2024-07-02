@@ -77,7 +77,7 @@ const Cart = () => {
                                             <button className="w-4 h-full text-2xl" onClick={() => decreaseQuantity(item.id)}>-</button>
                                         </div>
                                         :
-                                        <button className="bg-pink-500 px-2 py-2 rounded-md text-xs sm:text-base text-white " onClick={() => handelAddToCart(item)}>Add To Cart</button>
+                                        <button className="bg-pink-500 px-2 py-2 rounded-md text-xs sm:text-base text-white" onClick={() => handelAddToCart(item)}>Add To Cart</button>
                                 }
                                 {
                                     result.find((product) => product.id === item.id)

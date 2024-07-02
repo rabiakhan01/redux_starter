@@ -1,17 +1,18 @@
 import React from "react";
-import Cart from "./components/Cart";
-import Header from "./components/Header";
-import InformationForm from "./components/InformationForm";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import CartPage from "./pages/CartPage";
+import AddProduct from "./pages/AddProduct";
 
 function App() {
 
 
   return (
-    <div className="flex flex-col gap-5">
-      <Header />
-      <Cart />
-      <InformationForm />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route to='/' index element={<CartPage />} />
+        <Route to='/add-product' element={<AddProduct />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
