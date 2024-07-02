@@ -1,9 +1,15 @@
-import { PRODUCT_LIST } from "./types";
+import { PRODUCT_LIST, SET_PRODUCT_LIST } from "./types";
 
-export const addProduct = () => {
+export const productList = () => {
 
     return {
         type: PRODUCT_LIST,
-        data: 'hello',
+    }
+}
+export const setProductList = (data) => {
+
+    return {
+        type: SET_PRODUCT_LIST,
+        data,
     }
 }

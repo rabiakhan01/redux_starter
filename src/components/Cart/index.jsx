@@ -1,17 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeToCart, updateCart } from "../../redux/Cart/actions";
 import { allProducts } from "../../utils/dummyData";
+import { GetProduct } from "../../redux/Product/selectors";
+import { productList } from "../../redux/Product/actions";
 
 const Cart = () => {
     const dispatch = useDispatch();
 
     //get data from the store
     const result = useSelector((state) => state.cartItems);
-    console.log("🚀 ~ Cart ~ result:", result)
 
-    const res = useSelector((state) => state)
-    console.log("🚀 ~ state ~ result:", res)
+    const productsData = GetProduct();
+
     //call action when the user click on the cart button
     const handelAddToCart = (item) => {
         dispatch(addToCart({
@@ -51,12 +52,14 @@ const Cart = () => {
             dispatch(updateCart(updatedProduct));
         }
     }
-
+    useEffect(() => {
+        dispatch(productList())
+    }, [])
 
     return (
         <div className="flex flex-col gap-2 sm:gap-3">
             {
-                allProducts.map((item) => {
+                productsData.map((item) => {
                     return (
                         <div className="flex justify-between items-center sm:w-[30rem] lg:w-[40rem] border border-gray-400 h-32 ml-4 px-4" key={item.id}>
                             <img src={item.image} alt="" className="object-cover h-12 w-12 sm:h-16 sm:w-16 rounded-md" />
