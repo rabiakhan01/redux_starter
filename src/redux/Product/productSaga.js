@@ -1,5 +1,5 @@
 import { put, takeEvery } from "redux-saga/effects";
-import { ADD_PRODUCT, PRODUCT_LIST, SET_PRODUCT_LIST } from "./types";
+import { ADD_PRODUCT, DELETE_PRODUCT, PRODUCT_LIST, SET_PRODUCT_LIST } from "./types";
 import axios from "axios";
 
 //fetch data from api
@@ -19,9 +19,13 @@ function* addNewProduct(data) {
     })
 }
 
+function* removeProduct(data) {
+    yield axios.delete(`http://localhost:3001/products/${data.id}`)
+}
 function* productSaga() {
-    yield takeEvery(PRODUCT_LIST, getProduct)
-    yield takeEvery(ADD_PRODUCT, addNewProduct)
+    yield takeEvery(PRODUCT_LIST, getProduct);
+    yield takeEvery(ADD_PRODUCT, addNewProduct);
+    yield takeEvery(DELETE_PRODUCT, removeProduct)
 }
 
 export default productSaga;

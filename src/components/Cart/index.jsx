@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeToCart, updateCart } from "../../redux/Cart/actions";
 import { allProducts } from "../../utils/dummyData";
 import { GetProduct } from "../../redux/Product/selectors";
-import { productList } from "../../redux/Product/actions";
+import { deleteProduct, productList } from "../../redux/Product/actions";
 import images from "../../assets/images/images";
 
 const Cart = () => {
@@ -17,6 +17,10 @@ const Cart = () => {
         id: '',
         show: false
     });
+
+    const [deleteModal, setDeleteModal] = useState(false);
+
+
 
     //call action when the user click on the cart button
     const handelAddToCart = (item) => {
@@ -57,9 +61,10 @@ const Cart = () => {
             dispatch(updateCart(updatedProduct));
         }
     }
+
     useEffect(() => {
         dispatch(productList())
-    }, [])
+    }, [, deleteModal])
 
     const openModal = (id) => {
         setModal({
@@ -73,12 +78,29 @@ const Cart = () => {
             show: false
         })
     }
+
+    const handelDeleteModal = (id) => {
+        setModal({
+            id: id,
+            show: false
+        });
+        setDeleteModal(true);
+    }
+    const deleteItem = () => {
+        dispatch(deleteProduct(modal.id));
+        setDeleteModal(false)
+    }
+
+    const cancelDeleteItem = () => {
+        setDeleteModal(false)
+    }
+
     return (
-        <div className="flex flex-col gap-2 sm:gap-3">
+        <div className="flex flex-col justify-center items-center gap-2 sm:gap-3">
             {
                 productsData.map((item) => {
                     return (
-                        <div className={`relative`} key={item.id}>
+                        <div className={`relative ${deleteModal ? 'blur-sm' : ''}`} key={item.id}>
                             <div className="absolute z-20 top-2 left-8">
                                 {
 
@@ -90,7 +112,7 @@ const Cart = () => {
                                 {
                                     modal.show && modal.id === item.id &&
                                     <div className="bg-pink-500 flex flex-col gap-2 px-2 border border-pink-300 rounded-md py-5 text-white">
-                                        <p className="cursor-pointer">Delete Product</p>
+                                        <p className="cursor-pointer" onClick={() => handelDeleteModal(item.id)}>Delete Product</p>
                                         <p className="cursor-pointer">Update Product</p>
                                     </div>
                                 }
@@ -103,10 +125,10 @@ const Cart = () => {
                                 </div>
                                 <div className="flex flex-col gap-3">
                                     {
-                                        result?.find((product) => product.id === item.id && product.quantity > 0) ?
+                                        result.find((product) => product.id === item.id && product.quantity > 0) ?
                                             <div className="flex justify-between items-center bg-pink-500 px-2 sm:py-2 rounded-md text-white">
                                                 <button className="w-4 h-full text-xs sm:text-xl" onClick={() => increaseQuantity(item.id)}>+</button>
-                                                <p className="text-xs sm:text-base">{result?.find((product) => product.id === item.id).quantity}</p>
+                                                <p className="text-xs sm:text-base">{result.find((product) => product.id === item.id).quantity}</p>
                                                 <button className="w-4 h-full text-2xl" onClick={() => decreaseQuantity(item.id)}>-</button>
                                             </div>
                                             :
@@ -124,6 +146,23 @@ const Cart = () => {
                         </div>
                     )
                 })
+            }
+            {
+                deleteModal ?
+                    <div className="absolute flex flex-col gap-y-5 w-96 md:w-[30rem] h-48 border border-sky-300 bg-slate-50 rounded-md">
+                        <div className="flex justify-between pr-5 pt-5">
+                            <p className="text-lg pl-3 text-pink-500 font-medium">Delete The Record</p>
+                        </div>
+                        <div className="text-base font-medium text-primaryColor pl-3">
+                            <h1>Are you sure you want to delete this record?</h1>
+                        </div>
+                        <div className="flex gap-3 text-sm font-medium text-textColor justify-end pr-5 pt-6">
+                            <button className="bg-sky-500 px-2 py-2 rounded-md text-xs sm:text-base text-white" onClick={cancelDeleteItem}>Cancel</button>
+                            <button className="bg-pink-500 px-2 py-2 rounded-md text-xs sm:text-base text-white" onClick={deleteItem}>Delete</button>
+                        </div>
+                    </div>
+                    :
+                    ''
             }
         </div>
     )

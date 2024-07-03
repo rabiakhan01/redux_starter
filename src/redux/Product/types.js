@@ -1,3 +1,4 @@
 export const PRODUCT_LIST = 'PRODUCT_LIST';
 export const SET_PRODUCT_LIST = 'SET_PRODUCT_LIST';
 export const ADD_PRODUCT = 'ADD_PRODUCT';
+export const DELETE_PRODUCT = 'DELETE_PRODUCT';

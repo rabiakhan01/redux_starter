@@ -3,9 +3,11 @@ import { useDispatch } from "react-redux";
 import { addProduct } from "../../redux/Product/actions";
 import { GetProduct } from "../../redux/Product/selectors";
 import { productList } from "../../redux/Product/actions";
+import { useNavigate } from "react-router-dom";
 
 export default function Form() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const getProducts = GetProduct();
     console.log("🚀 ~ Form ~ getProducts:", getProducts)
     const [product, setProduct] = useState({
@@ -33,6 +35,7 @@ export default function Form() {
                 price: '',
                 image: '',
             })
+            navigate('/');
         }
     }
     useEffect(() => {

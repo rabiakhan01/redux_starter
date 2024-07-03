@@ -1,4 +1,4 @@
-import { ADD_PRODUCT, PRODUCT_LIST, SET_PRODUCT_LIST } from "./types";
+import { ADD_PRODUCT, DELETE_PRODUCT, PRODUCT_LIST, SET_PRODUCT_LIST } from "./types";
 
 export const productList = () => {
 
@@ -18,5 +18,12 @@ export const addProduct = (data) => {
     return {
         type: ADD_PRODUCT,
         data
+    }
+}
+
+export const deleteProduct = (id) => {
+    return {
+        type: DELETE_PRODUCT,
+        id
     }
 }
