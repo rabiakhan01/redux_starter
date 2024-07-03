@@ -11,7 +11,9 @@ const images = {
     colliflower: require('./colliflower.png'),
     meat: require('./meat.jpg'),
     spinach: require('./spinach.jpg'),
-    strawberry: require('./strawberry.jpg')
+    strawberry: require('./strawberry.jpg'),
+    more: require('./more.png'),
+    cross: require('./cross.png'),
 }
 
 export default images;
