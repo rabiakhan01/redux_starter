@@ -1,12 +1,15 @@
 import { put, takeEvery } from "redux-saga/effects";
 import { ADD_PRODUCT, PRODUCT_LIST, SET_PRODUCT_LIST } from "./types";
-import axios, { Axios } from "axios";
+import axios from "axios";
+
+//fetch data from api
 function* getProduct() {
     let data = yield fetch('http://localhost:3001/products');
     data = yield data.json();
     yield put({ type: SET_PRODUCT_LIST, data })
 }
 
+//post new data in the fake api
 function* addNewProduct(data) {
     yield axios.post(`http://localhost:3001/products`, {
         id: data.data.id,
@@ -15,6 +18,7 @@ function* addNewProduct(data) {
         image: data.data.image
     })
 }
+
 function* productSaga() {
     yield takeEvery(PRODUCT_LIST, getProduct)
     yield takeEvery(ADD_PRODUCT, addNewProduct)
