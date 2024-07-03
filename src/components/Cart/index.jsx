@@ -5,13 +5,14 @@ import { allProducts } from "../../utils/dummyData";
 import { GetProduct } from "../../redux/Product/selectors";
 import { deleteProduct, productList } from "../../redux/Product/actions";
 import images from "../../assets/images/images";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
     const dispatch = useDispatch();
 
     //get data from the store
     const result = useSelector((state) => state.cartItems);
-
+    const navigate = useNavigate();
     const productsData = GetProduct();
     const [modal, setModal] = useState({
         id: '',
@@ -85,25 +86,29 @@ const Cart = () => {
             show: false
         });
         setDeleteModal(true);
+        document.body.classList.add('overflow-hidden');
     }
     const deleteItem = () => {
         dispatch(deleteProduct(modal.id));
-        setDeleteModal(false)
+        setDeleteModal(false);
+        document.body.classList.remove('overflow-hidden');
+
     }
 
     const cancelDeleteItem = () => {
-        setDeleteModal(false)
+        setDeleteModal(false);
+        document.body.classList.remove('overflow-hidden');
+
     }
 
     return (
-        <div className="flex flex-col justify-center items-center gap-2 sm:gap-3">
+        <div className={`flex flex-col justify-center items-center gap-2 sm:gap-3`}>
             {
                 productsData.map((item) => {
                     return (
                         <div className={`relative ${deleteModal ? 'blur-sm' : ''}`} key={item.id}>
                             <div className="absolute z-20 top-2 left-8">
                                 {
-
                                     modal.show && modal.id === item.id ?
                                         <img src={images.cross} alt="" className="z-20 h-2.5 w-2.5 mb-1 cursor-pointer" onClick={() => closeModal(item.id)} />
                                         :
@@ -113,7 +118,7 @@ const Cart = () => {
                                     modal.show && modal.id === item.id &&
                                     <div className="bg-pink-500 flex flex-col gap-2 px-2 border border-pink-300 rounded-md py-5 text-white">
                                         <p className="cursor-pointer" onClick={() => handelDeleteModal(item.id)}>Delete Product</p>
-                                        <p className="cursor-pointer">Update Product</p>
+                                        <p className="cursor-pointer" onClick={() => navigate(`/update-product/${item.id}`)}>Update Product</p>
                                     </div>
                                 }
                             </div>

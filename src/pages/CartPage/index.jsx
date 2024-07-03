@@ -3,7 +3,7 @@ import Cart from "../../components/Cart";
 
 export default function CartPage() {
     return (
-        <div className="flex flex-col gap-5">
+        <div className="relative flex flex-col gap-5">
             <Header />
             <Cart />
         </div>
