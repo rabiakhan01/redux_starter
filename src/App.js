@@ -9,8 +9,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route to='/' index element={<CartPage />} />
-        <Route to='/add-product' element={<AddProduct />} />
+        <Route path='/' index element={<CartPage />} />
+        <Route path='/add-product' element={<AddProduct />} />
       </Routes>
     </BrowserRouter>
   );
