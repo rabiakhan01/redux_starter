@@ -10,15 +10,13 @@ export default function Form() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const getProducts = GetProduct();
-    console.log("🚀 ~ Form ~ getProducts:", getProducts)
+    // console.log("🚀 ~ Form ~ getProducts:", getProducts)
     const [product, setProduct] = useState({
         id: '',
         name: '',
         price: '',
         image: '',
     });
-
-    const [data, setData] = useState(false);
 
     const handelChange = (event) => {
         const { name, value } = event.target;
@@ -36,7 +34,7 @@ export default function Form() {
                 price: '',
                 image: '',
             })
-            navigate('/');
+
         }
     }
 
@@ -68,25 +66,25 @@ export default function Form() {
         });
     }
     return (
-        <div className="flex justify-center items-center h-lvh">
-            <div className="flex flex-col items-center gap-10 flex-wrap border border-pink-300 px-10 py-16">
-                <h1 className="ml-4 font-semibold text-pink-500 text-2xl">{id ? 'Update' : 'Add New'} Product</h1>
-                <div className="flex flex-col gap-4 ml-4 m">
-                    <div className="flex gap-4 justify-between w-[30rem]">
+        <div className="flex justify-center items-center w-full">
+            <div className="flex flex-col items-center gap-10 flex-wrap border border-pink-300 px-2 w-11/12 sm:w-[30rem] py-10">
+                <h1 className="ml-4 font-semibold text-pink-500 text-xl sm:text-2xl">{id ? 'Update' : 'Add New'} Product</h1>
+                <div className="flex flex-col justify-center items-center w-full gap-2">
+                    <div className="flex flex-col gap-2 w-full items-center">
                         <label>{id ? 'Update' : 'Enter'} Name</label>
-                        <input type="text" onChange={handelChange} name="name" value={product.name} className="h-10 w-80 border border-pink-300 rounded-md px-2" />
+                        <input type="text" onChange={handelChange} name="name" value={product.name} className="h-10 w-11/12 sm:w-80 border border-pink-300 rounded-md px-2" />
                     </div>
-                    <div className="flex gap-4 justify-between w-[30rem]">
+                    <div className="flex flex-col gap-2 w-full items-center">
                         <label>{id ? 'Update' : 'Enter'} Price</label>
-                        <input type="text" onChange={handelChange} name="price" value={product.price} className="h-10 w-80 border border-pink-300 rounded-md px-2" />
+                        <input type="text" onChange={handelChange} name="price" value={product.price} className="h-10 w-11/12 sm:w-80 border border-pink-300 rounded-md px-2" />
                     </div>
-                    <div className="flex gap-4 justify-between w-[30rem]">
+                    <div className="flex flex-col gap-2 w-full items-center">
                         <label>{id ? 'Update' : 'Enter'}  URL</label>
-                        <input type="text" onChange={handelChange} name="image" value={product.image} className="h-10 w-80 border border-pink-300 rounded-md px-2" />
+                        <input type="text" onChange={handelChange} name="image" value={product.image} className="h-10 w-11/12 sm:w-80 border border-pink-300 rounded-md px-2" />
                     </div>
 
-                    <div className="flex justify-end w-[30rem]">
-                        <button type="button" className="px-6 py-2 bg-pink-500 text-white rounded-md" onClick={id ? updateData : submitData}>{id ? 'Update' : 'Submit'}</button>
+                    <div className=" flex flex-col w-full items-center mt-6">
+                        <button type="button" className="h-10 w-11/12 sm:w-80 bg-pink-500 text-white rounded-md" onClick={id ? updateData : submitData}>{id ? 'Update' : 'Submit'}</button>
                     </div>
                 </div>
             </div>

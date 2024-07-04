@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeToCart, updateCart } from "../../redux/Cart/actions";
-import { allProducts } from "../../utils/dummyData";
 import { GetProduct } from "../../redux/Product/selectors";
 import { deleteProduct, productList } from "../../redux/Product/actions";
 import images from "../../assets/images/images";
@@ -14,6 +13,7 @@ const Cart = () => {
     const result = useSelector((state) => state.cartItems);
     const navigate = useNavigate();
     const productsData = GetProduct();
+    //console.log("🚀 ~ Cart ~ productsData:", productsData)
     const [modal, setModal] = useState({
         id: '',
         show: false
@@ -72,12 +72,15 @@ const Cart = () => {
             id: id,
             show: true
         });
+        document.body.classList.add('overflow-hidden');
     }
     const closeModal = (id) => {
         setModal({
             id: id,
             show: false
-        })
+        });
+        document.body.classList.remove('overflow-hidden');
+
     }
 
     const handelDeleteModal = (id) => {
@@ -87,26 +90,38 @@ const Cart = () => {
         });
         setDeleteModal(true);
         document.body.classList.add('overflow-hidden');
+        window.scroll({
+            top: 90,
+            behavior: 'instant'
+        })
+
     }
     const deleteItem = () => {
         dispatch(deleteProduct(modal.id));
         setDeleteModal(false);
         document.body.classList.remove('overflow-hidden');
+        window.scroll({
+            top: 0,
+            behavior: 'smooth'
+        })
 
     }
 
     const cancelDeleteItem = () => {
         setDeleteModal(false);
         document.body.classList.remove('overflow-hidden');
-
+        window.scroll({
+            top: 0,
+            behavior: 'smooth'
+        })
     }
 
     return (
-        <div className={`flex flex-col justify-center items-center gap-2 sm:gap-3`}>
+        <div className={`flex flex-col justify-center items-center gap-2 sm:gap-3 `}>
             {
                 productsData.map((item) => {
                     return (
-                        <div className={`relative ${deleteModal ? 'blur-sm' : ''}`} key={item.id}>
+                        <div className={`relative w-full ${deleteModal ? 'blur-sm' : ''}`} key={item.id}>
                             <div className="absolute z-20 top-2 left-8">
                                 {
                                     modal.show && modal.id === item.id ?
@@ -122,9 +137,9 @@ const Cart = () => {
                                     </div>
                                 }
                             </div>
-                            <div className={`flex justify-between items-center sm:w-[30rem] lg:w-[40rem] border border-gray-400 h-32 ml-4 px-4`}>
-                                <img src={item.image} alt="" className="object-cover h-12 w-12 sm:h-16 sm:w-16 rounded-md" />
-                                <div className="text-sm sm:text-base">
+                            <div className={`flex justify-between items-center w-11/12 md:w-[30rem] lg:w-[40rem] border border-gray-400 h-32 ml-4 px-2 sm:px-4`}>
+                                <img src={item.image} alt="" className="object-cover h-9 w-9 sm:h-16 sm:w-16 rounded-md" />
+                                <div className="text-xs sm:text-base">
                                     <p>Name: {item.name}</p>
                                     <p>Price: ${item.price}</p>
                                 </div>
@@ -154,7 +169,7 @@ const Cart = () => {
             }
             {
                 deleteModal ?
-                    <div className="absolute flex flex-col gap-y-5 w-96 md:w-[30rem] h-48 border border-sky-300 bg-slate-50 rounded-md">
+                    <div className="absolute top-96 flex flex-col gap-y-5 w-96 md:w-[30rem] h-48 border border-sky-300 bg-slate-50 rounded-md">
                         <div className="flex justify-between pr-5 pt-5">
                             <p className="text-lg pl-3 text-pink-500 font-medium">Delete The Record</p>
                         </div>

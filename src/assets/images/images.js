@@ -14,6 +14,7 @@ const images = {
     strawberry: require('./strawberry.jpg'),
     more: require('./more.png'),
     cross: require('./cross.png'),
+    error: require('./404_error.png')
 }
 
 export default images;

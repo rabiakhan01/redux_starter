@@ -1,23 +1,34 @@
 import { put, takeEvery } from "redux-saga/effects";
-import { ADD_PRODUCT, DELETE_PRODUCT, PRODUCT_LIST, SET_PRODUCT_LIST, UPDATE_PRODUCT } from "./types";
+import { ADD_PRODUCT, DELETE_PRODUCT, PRODUCT_LIST, SET_ERROR, SET_PRODUCT_LIST, SET_REQUEST_FAILED, UPDATE_PRODUCT } from "./types";
 import axios from "axios";
 import { GetProduct } from "./selectors";
 
 //fetch data from api
 function* getProduct() {
-    let data = yield fetch('http://localhost:3001/products');
-    data = yield data.json();
-    yield put({ type: SET_PRODUCT_LIST, data })
+    try {
+        let data = yield axios.get('http://localhost:3001/products');
+        data = data.data
+        // console.log("🚀 ~ function*getProduct ~ result:", result)
+        // console.log("🚀 ~ function*getProduct ~ data:", result)
+        yield put({ type: SET_PRODUCT_LIST, data })
+    } catch (error) {
+        //console.log("🚀 ~ function*getProduct ~ result:", error)
+        yield put({ type: SET_REQUEST_FAILED, error })
+    }
 }
 
 //post new data in the fake api
 function* addNewProduct(data) {
-    yield axios.post(`http://localhost:3001/products`, {
-        id: data.data.id,
-        name: data.data.name,
-        price: data.data.price,
-        image: data.data.image
-    })
+    try {
+        yield axios.post(`http://localhost:3001/prs`, {
+            id: data.data.id,
+            name: data.data.name,
+            price: data.data.price,
+            image: data.data.image
+        })
+    } catch (error) {
+        yield put({ type: SET_REQUEST_FAILED, error })
+    }
 }
 
 function* removeProduct(data) {

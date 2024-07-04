@@ -1,4 +1,4 @@
-import { ADD_PRODUCT, DELETE_PRODUCT, PRODUCT_LIST, SET_PRODUCT_LIST, UPDATE_PRODUCT } from "./types";
+import { ADD_PRODUCT, DELETE_PRODUCT, PRODUCT_LIST, SET_PRODUCT_LIST, SET_REQUEST_FAILED, UPDATE_PRODUCT } from "./types";
 
 export const productList = () => {
 
@@ -7,7 +7,6 @@ export const productList = () => {
     }
 }
 export const setProductList = (data) => {
-
     return {
         type: SET_PRODUCT_LIST,
         data,
@@ -32,5 +31,13 @@ export const updateProduct = (data) => {
     return {
         type: UPDATE_PRODUCT,
         data
+    }
+}
+
+
+export const requestFailed = (error) => {
+    return {
+        type: SET_REQUEST_FAILED,
+        error
     }
 }
