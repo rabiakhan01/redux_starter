@@ -14,6 +14,7 @@ const Header = () => {
     }, [result])
 
     const navigateToForm = () => {
+
         navigate('/add-product');
     }
     return (

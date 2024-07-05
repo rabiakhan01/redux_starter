@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux"
 
-export const GetProduct = () => {
-    const result = useSelector((state) => state.productData);
+export const GetResponse = () => {
+    const result = useSelector((state) => state.Response);
     // console.log("🚀 ~ GetProduct ~ result:", result.data);
     return result;
 }

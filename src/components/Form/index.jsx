@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { addProduct, updateProduct } from "../../redux/Product/actions";
-import { GetProduct } from "../../redux/Product/selectors";
-import { productList } from "../../redux/Product/actions";
+import { addProduct, endPointExists, updateProduct } from "../../redux/Product/actions";
+import { GetResponse } from "../../redux/Product/selectors";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function Form() {
     const { id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const getProducts = GetProduct();
-    // console.log("🚀 ~ Form ~ getProducts:", getProducts)
+    const getResponse = GetResponse();
+    console.log("🚀 ~ Form ~ getResponse:", getResponse)
     const [product, setProduct] = useState({
-        id: '',
+        id: 0,
         name: '',
         price: '',
         image: '',
@@ -24,27 +23,38 @@ export default function Form() {
     }
 
     const submitData = () => {
-        if (product.price !== '' && product.name !== '' && product.image !== '') {
-            const newId = getProducts.length;
-            const newProduct = { ...product, id: newId + 1 };
-            dispatch(addProduct(newProduct))
-            setProduct({
-                id: '',
-                name: '',
-                price: '',
-                image: '',
-            })
-
+        if (getResponse.error) {
+            navigate('/404')
+        }
+        else {
+            if (product.price !== '' && product.name !== '' && product.image !== '') {
+                const newProduct = { ...product, id: Math.floor(Math.random() * 100) };
+                dispatch(addProduct(newProduct))
+                setProduct({
+                    id: 0,
+                    name: '',
+                    price: '',
+                    image: '',
+                })
+                navigate('/')
+            }
         }
     }
 
     useEffect(() => {
-        dispatch(productList())
+        if (id) {
+            dispatch(endPointExists(id))
+        }
+        else {
+            dispatch(endPointExists())
+        }
     }, [])
 
     useEffect(() => {
         if (id) {
-            const findProduct = getProducts.find((product) => product.id === id)
+            console.log("🚀 ~ useEffect ~ id:", typeof (id))
+            const findProduct = getResponse.find((product) => product.id === id)
+            console.log("🚀 ~ useEffect ~ findProduct:", findProduct)
             if (findProduct) {
                 setProduct({
                     id: id,
@@ -53,8 +63,13 @@ export default function Form() {
                     image: findProduct.image
                 })
             }
+            else {
+                navigate('/404')
+            }
         }
-    }, [getProducts]);
+
+
+    }, [getResponse]);
 
     const updateData = () => {
         const updatedProduct = { ...product }

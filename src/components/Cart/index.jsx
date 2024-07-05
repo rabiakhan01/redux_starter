@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeToCart, updateCart } from "../../redux/Cart/actions";
-import { GetProduct } from "../../redux/Product/selectors";
-import { deleteProduct, productList } from "../../redux/Product/actions";
+import { GetProduct, GetResponse } from "../../redux/Product/selectors";
+import { deleteProduct, endPointExists, productList } from "../../redux/Product/actions";
 import images from "../../assets/images/images";
 import { useNavigate } from "react-router-dom";
 
@@ -12,7 +12,7 @@ const Cart = () => {
     //get data from the store
     const result = useSelector((state) => state.cartItems);
     const navigate = useNavigate();
-    const productsData = GetProduct();
+    const productsData = GetResponse()
     //console.log("🚀 ~ Cart ~ productsData:", productsData)
     const [modal, setModal] = useState({
         id: '',
@@ -65,6 +65,7 @@ const Cart = () => {
 
     useEffect(() => {
         dispatch(productList())
+        dispatch(endPointExists())
     }, [, deleteModal])
 
     const openModal = (id) => {

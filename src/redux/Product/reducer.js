@@ -1,6 +1,6 @@
 import { SET_PRODUCT_LIST, SET_REQUEST_FAILED } from "./types";
 
-export default function productData(state = [], action) {
+export default function Response(state = [], action) {
 
     switch (action.type) {
         case SET_PRODUCT_LIST:
